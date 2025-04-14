@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3').verbose();
 const isDev = process.env.NODE_ENV === 'development';
 const dbPath = isDev
   ? path.join(__dirname, 'library.db') // Path in development
-  : path.join(process.resourcesPath, 'library.db'); // Path in production
+  : path.join(process.resourcesPath, 'assets', 'library.db'); // Path in production
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
