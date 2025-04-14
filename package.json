@@ -30,8 +30,7 @@
       "**/*",
       "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
       "!**/node_modules/.bin",
-      "!**/*.map",
-      "assets/**/*"
+      "!**/*.map"
     ],
     "win": {
       "target": "nsis",
