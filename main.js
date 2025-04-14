@@ -54,7 +54,8 @@ ipcMain.on('borrow-book', (event, book) => {
         }
     );
 });
-mainWindow.webContents.openDevTools();//delete lter
+mainWindow.webContents.reloadIgnoringCache();
+//delete lter
 
 ipcMain.on('get-borrowed-books', (event) => {
     db.all(`SELECT * FROM borrowed_books`, [], (err, rows) => {

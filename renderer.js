@@ -59,10 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm(`Are you sure you want to add the book "${title}" for borrower "${borrower}"?`)) {
             ipcRenderer.send('borrow-book', { title, borrower, category, borrowedDate, returnDate });
     
-            // Clear the form and reset dropdown
-            document.getElementById('add-book-form').reset();
-            document.getElementById('category').selectedIndex = 0;
-        }
+           }
     });
     
     // View stats
@@ -103,6 +100,8 @@ function clearForm() {
     document.getElementById('category').value = '';
     document.getElementById('borrowed-date').value = '';
     document.getElementById('return-date').value = '';
+    document.getElementById('book-title').focus();
+
 }
 
 ipcRenderer.on('borrow-book-success', () => {
@@ -148,6 +147,7 @@ function fetchBorrowedBooks() {
 ipcRenderer.on('get-borrowed-books-success', (event, books) => {
     const bookList = document.getElementById('active-books-list');
     bookList.innerHTML = '';
+    bookList.offsetHeight; // trigger reflow
 
     books.forEach((book) => {
         const row = document.createElement('tr');
