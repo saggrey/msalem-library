@@ -62,12 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear the form and reset dropdown
             document.getElementById('add-book-form').reset();
             document.getElementById('category').selectedIndex = 0;
-    
-            // Immediately refresh book list to reflect new addition
-            setTimeout(() => {
-                fetchBorrowedBooks();
-                fetchOverdueBooks();
-            }, 300); // Slight delay to allow backend to update
         }
     });
     
@@ -159,18 +153,23 @@ ipcRenderer.on('get-borrowed-books-success', (event, books) => {
         const row = document.createElement('tr');
         row.setAttribute('data-id', book.id);
         row.innerHTML = `
-        <td>${book.title}</td>
-        <td>${book.borrower}</td>
-        <td>${book.category}</td>
-        <td>${book.borrowed_date}</td>
-        <td>${book.return_date}</td>
-        <td>
-            <button class="mark-returned-button" onclick="markAsReturned(${book.id})">Mark as Returned</button>
+            <td>${book.title}</td>
+            <td>${book.borrower}</td>
+            <td>${book.category}</td>
+            <td>${book.borrowed_date}</td>
+            <td>${book.return_date}</td>
+            <td>
+                <button class="mark-returned-button" onclick="markAsReturned(${book.id})">Mark as Returned</button>
             </td>
         `;
-        bookList.appendChild(row); 
+        bookList.appendChild(row);
     });
-}); 
+
+    // ✅ Force a repaint
+    bookList.style.display = 'none';
+    void bookList.offsetHeight; // Trigger reflow
+    bookList.style.display = '';
+});
 
 function fetchArchivedBooks() {
     ipcRenderer.send('get-archived-books');
