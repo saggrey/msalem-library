@@ -82,7 +82,24 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     text-align: center;
 }
+/* Welcome message styling */
+.welcome-message {
+    color: yellow;
+    background-color: green;
+    text-align: center;
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
 
+.sub-message {
+    color: green;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
 h2 {
     color: green;
     margin-bottom: 20px;
