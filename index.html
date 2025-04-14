@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M'Salem School Library</title>
+    <link rel="icon" type="image/ico" href="assets/library1">
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <header class="app-header">
+        <img id="logo" src="assets/images/school-logo.jpg" alt="School Logo" class="header-logo">
+        <div class="header-title">
+            M'Salem School Library
+            <div class="header-quote">"A reader lives a thousand lives before he dies."</div>
+        </div>
+        <img id="rightImage" src="assets/images/right-image.jpg" alt="Right Image" class="header-image">
+        <img id="extraImage" src="assets/images/extra-image.jpg" alt="Extra Image" class="header-image">
+    </header>
+
+    <div class="main-content">
+        <main>
+            <!-- Overdue Notifications -->
+            <section id="notifications">
+                <!-- Overdue Notifications Button -->
+                <button id="toggle-overdue" class="toggle-button">Show Overdue Notifications</button>
+                
+                <!-- Overdue Notifications List -->
+                <ul id="overdue-list"></ul>
+                
+                <!-- Borrowed Stats Section -->
+                <div id="borrowed-stats">
+                    <label for="time-period">View Borrowed Books:</label>
+                    <select id="time-period" class="dropdown">
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                    <button id="view-stats" class="toggle-button">View Stats</button>
+                    <div id="stats-result" class="stats-result"></div>
+                </div>
+            </section>
+
+            <section id="book-form">
+                <h2>Borrower's Entry Form</h2>
+                <form id="add-book-form">
+                    <input type="text" id="book-title" placeholder="Book Title" required>
+                    <input type="text" id="borrower-name" placeholder="Borrower's Name" required>
+                    <label for="category">Category:</label>
+                    <select id="category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Preschool">Preschool</option>
+                        <option value="Lower Primary">Lower Primary</option>
+                        <option value="Upper Primary">Upper Primary</option>
+                        <option value="JHS">JHS</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                    <label for="borrowed-date">Borrowed Date:</label>
+                    <input type="date" id="borrowed-date" title="Select the borrowed date" required>
+                    <input type="date" id="return-date" placeholder="Return Date" required>
+                    <button type="submit">Add Book</button>
+                </form>
+            </section>
+
+            <section id="active-books">
+                <h2>Active Borrowed Books</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Borrower</th>
+                            <th>Category</th>
+                            <th>Borrowed Date</th>
+                            <th>Return Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="active-books-list"></tbody>
+                </table>
+            </section>
+
+            <section id="archived-books">
+                <button id="toggle-archived" class="toggle-button">Show Archived Books</button>
+                <h2>Archived Books</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Borrower</th>
+                            <th>Category</th>
+                            <th>Borrowed Date</th>
+                            <th>Returned Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="archived-books-list"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    
+    <script src="renderer.js"></script>
+</body>
+</html>

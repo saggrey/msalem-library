@@ -1,0 +1,248 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin-left: 5; /* Removed margin */
+    padding: 0;
+    padding-top: 180px; /* Space for fixed header */
+}
+
+/* Header Styling */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: green;
+    color: yellow;
+    padding: 15px;
+    font-size: 24px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header-logo {
+    height: 150px;
+    width: auto;
+    border-radius: 5%;
+}
+
+.header-title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 48px;
+    flex-grow: 1;
+}
+
+.header-quote {
+    font-size: 24px;
+    font-style: italic;
+    color: lightyellow;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.header-images {
+    display: flex;
+    gap: 10px;
+}
+
+/* Styling for Header Images */
+.header-image {
+    height: 130px;
+    width: auto;
+    border-radius: 5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-left: 20px;
+}
+
+#extraImage {
+    margin-right: 30px; /* Shifts the image slightly to the left */
+}
+
+.header-image:hover {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Content Container */
+.main-content {
+    margin: 0;
+}
+
+/* Login Container */
+.login-container {
+    width: 320px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+h2 {
+    color: green;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button, .toggle-button {
+    background: green;
+    color: yellow;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+button:hover, .toggle-button:hover {
+    background: darkgreen;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+form input,
+form select {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    flex: 0 0 auto;
+    padding: 10px 20px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: green;
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.4);
+}
+
+/* Notifications Section Styling */
+#notifications {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Borrowed Stats Section Styling */
+#borrowed-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Dropdown Styling */
+.dropdown {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Stats Result Styling */
+.stats-result {
+    margin-left: 10px;
+    font-size: 16px;
+    color: green;
+    font-weight: bold;
+}
+
+/* Overdue Notifications List Styling */
+#overdue-list {
+    margin-top: 10px;
+    padding: 10px;
+    list-style-type: disc;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+    font-size: 14px;
+    max-width: 300px;
+    display: none;
+}
+
+#overdue-list li {
+    margin-bottom: 5px;
+}
+
+/* Toggle Button Styling */
+.toggle-button {
+    background-color: rgb(128, 0, 38);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.toggle-button:hover {
+    background-color: darkgreen;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: white;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 15px;
+}
+
+table th {
+    background-color: green;
+    color: yellow;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Loading Indicator */
+#loading-indicator {
+    text-align: center;
+    font-size: 18px;
+    color: green;
+    margin: 20px 0;
+}
+/* Rotating Quotes Animation */
+.header-quote {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.header-quote.fade-out {
+    opacity: 0;
+}

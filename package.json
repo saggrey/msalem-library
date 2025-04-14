@@ -1,0 +1,46 @@
+{
+  "name": "msalem-library",
+  "version": "1.0.0",
+  "productName": "M'Salem School Library",
+  "description": "M'Salem Library Management",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "SAggrey",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^24.3.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  },
+  "build": {
+    "appId": "com.msalem.library",
+    "productName": "M'Salem School Library",
+    "copyright": "Copyright © 2025",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/.bin",
+      "!**/*.map"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/library1.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
