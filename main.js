@@ -1,92 +1,36 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
-
-// Determine the correct path to the database
-const isDev = process.env.NODE_ENV === 'development';
-const dbPath = isDev
-  ? path.join(__dirname, 'library.db') // Path in development
-  : path.join(process.resourcesPath, 'assets', 'library.db'); // Path in production
-
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.message);
-  } else {
-    console.log('Connected to the database at', dbPath);
-  }
-});
-
-// Initialize the database with required tables
-db.serialize(() => {
-  // Create the borrowed_books table if it doesn't exist
-  db.run(`
-    CREATE TABLE IF NOT EXISTS borrowed_books (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      borrower TEXT NOT NULL,
-      category TEXT NOT NULL,
-      borrowed_date TEXT NOT NULL,
-      return_date TEXT NOT NULL
-    )
-  `, (err) => {
-    if (err) {
-      console.error('Error creating borrowed_books table:', err.message);
-    } else {
-      console.log('borrowed_books table is ready.');
-    }
-  });
-
-  // Create the archived_books table if it doesn't exist
-  db.run(`
-    CREATE TABLE IF NOT EXISTS archived_books (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      borrower TEXT NOT NULL,
-      category TEXT NOT NULL,
-      borrowed_date TEXT NOT NULL,
-      return_date TEXT NOT NULL,
-      returned_date TEXT NOT NULL
-    )
-  `, (err) => {
-    if (err) {
-      console.error('Error creating archived_books table:', err.message);
-    } else {
-      console.log('archived_books table is ready.');
-    }
-  });
-});
+const db = require('./database'); // Import the database module
 
 let mainWindow;
 
 app.whenReady().then(() => {
-  mainWindow = new BrowserWindow({
-    title: "M'Salem School Library",
-    width: 1200,
-    height: 800,
-    icon: path.join(__dirname, 'assets/library1.ico'), // Set icon here
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false // Ensure this is false to use ipcRenderer
-    }
-  });
+    mainWindow = new BrowserWindow({
+        title: "M'Salem School Library",
+        width: 1200,
+        height: 800,
+        icon: path.join(__dirname, 'assets/library1.ico'), // Set icon here
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false // Ensure this is false to use ipcRenderer
+        }
+    });
 
-  mainWindow.loadFile(path.join(__dirname, 'login.html'));
+    mainWindow.loadFile(path.join(__dirname, 'login.html'));
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 });
-
-
 
 // Login authentication logic
 ipcMain.on('login', (event, credentials) => {
     const { username, password } = credentials;
 
     // Simple authentication logic
-    if (username === 'adminsa' && password === 'mssclsa') {
+    if (username === 'admin' && password === 'password123') {
         mainWindow.loadFile(path.join(__dirname, 'index.html')); // Load the main page
     } else {
         event.reply('login-failed', 'Invalid username or password');
@@ -221,6 +165,19 @@ ipcMain.on('mark-as-returned', (event, bookId) => {
                 }
             }
         );
+    });
+});
+
+// Handle deleting a borrowed book
+ipcMain.on('delete-borrowed-book', (event, bookId) => {
+    db.run(`DELETE FROM borrowed_books WHERE id = ?`, [bookId], function (err) {
+        if (err) {
+            console.error('Error deleting book:', err.message);
+            event.reply('delete-borrowed-book-failed', err.message);
+        } else {
+            console.log('Book deleted successfully.');
+            event.reply('delete-borrowed-book-success');
+        }
     });
 });
 
