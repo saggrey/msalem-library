@@ -1,6 +1,20 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const db = require('./database'); // Import the database module
+const sqlite3 = require('sqlite3').verbose();
+
+// Determine the correct path to the database
+const isDev = process.env.NODE_ENV === 'development';
+const dbPath = isDev
+  ? path.join(__dirname, 'library.db') // Path in development
+  : path.join(process.resourcesPath, 'library.db'); // Path in production
+
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err.message);
+  } else {
+    console.log('Connected to the database at', dbPath);
+  }
+});
 
 let mainWindow;
 
@@ -19,6 +33,11 @@ app.whenReady().then(() => {
     mainWindow.loadFile(path.join(__dirname, 'login.html'));
 });
 
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
