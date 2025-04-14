@@ -27,11 +27,13 @@
       "output": "dist"
     },
     "files": [
-      "**/*",
-      "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
-      "!**/node_modules/.bin",
-      "!**/*.map"
-    ],
+  "**/*",
+  "library.db",    
+  "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+  "!**/node_modules/.bin",
+  "!**/*.map"
+],
+
     "win": {
       "target": "nsis",
       "icon": "assets/library1.ico"
