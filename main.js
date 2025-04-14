@@ -30,7 +30,7 @@ ipcMain.on('login', (event, credentials) => {
     const { username, password } = credentials;
 
     // Simple authentication logic
-    if (username === 'admin' && password === 'password123') {
+    if (username === 'msscla' && password === 'msscla1404') {
         mainWindow.loadFile(path.join(__dirname, 'index.html')); // Load the main page
     } else {
         event.reply('login-failed', 'Invalid username or password');
