@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('toggle-overdue').textContent = 'Show Overdue Notifications';
         }
     });
+    
     document.getElementById('toggle-archived').addEventListener('click', () => {
         const archivedTable = document.querySelector('#archived-books table'); // Target only the table
         const toggleButton = document.getElementById('toggle-archived');
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleButton.textContent = 'Show Archived Books';
         }
     });
+    
     document.getElementById('add-book-form').addEventListener('submit', (event) => {
         event.preventDefault();
     

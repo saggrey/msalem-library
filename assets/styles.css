@@ -75,7 +75,7 @@ body {
 /* Login Container */
 .login-container {
     width: 350px;
-    margin: 20px auto; /* Reduced margin to move it closer to the top */
+    margin: 20px auto;
     padding: 30px;
     background: white;
     border-radius: 12px;
@@ -263,3 +263,19 @@ table tr:hover {
 .header-quote.fade-out {
     opacity: 0;
 }
+#active-books,
+#archived-books {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+#active-books h2,
+#archived-books h2,
+#active-books .toggle-button,
+#archived-books .toggle-button {
+    text-align: center;
+    align-self: center;
+}
+
