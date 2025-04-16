@@ -19,6 +19,32 @@ app.whenReady().then(() => {
     mainWindow.loadFile(path.join(__dirname, 'login.html'));
 });
 
+const { autoUpdater } = require('electron-updater');
+
+// Check for updates when the app is ready
+app.whenReady().then(() => {
+    autoUpdater.checkForUpdatesAndNotify();
+
+    autoUpdater.on('update-available', () => {
+        console.log('Update available. Downloading...');
+        mainWindow.webContents.send('update-available');
+    });
+
+    autoUpdater.on('update-downloaded', () => {
+        console.log('Update downloaded. It will be installed on restart.');
+        mainWindow.webContents.send('update-downloaded');
+    });
+
+    autoUpdater.on('error', (error) => {
+        console.error('Error during update:', error.message);
+        mainWindow.webContents.send('update-error', error.message);
+    });
+});
+
+// Restart the app after the update is downloaded
+ipcMain.on('restart-app', () => {
+    autoUpdater.quitAndInstall();
+});
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();

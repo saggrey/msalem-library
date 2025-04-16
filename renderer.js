@@ -75,13 +75,35 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // View stats
     document.getElementById('view-stats').addEventListener('click', () => {
-        const timePeriod = document.getElementById('time-period').value;
-        fetchBorrowedStats(timePeriod);
-        function fetchBorrowedStats(timePeriod) {
+        const statsResult = document.getElementById('stats-result'); // Get the stats result container
+        const timePeriod = document.getElementById('time-period').value; // Get the selected time period
+        const viewStatsButton = document.getElementById('view-stats'); // Get the button element
+    
+        // Check if the stats result is currently visible
+        if (statsResult.style.display === 'none' || statsResult.style.display === '') {
+            // Send the selected time period to the main process
             ipcRenderer.send('get-borrowed-stats', timePeriod);
-        } 
+    
+            // Listen for the response from the main process
+            ipcRenderer.once('get-borrowed-stats-success', (event, count) => {
+                statsResult.textContent = `Total books borrowed during selected period: ${count}`;
+                statsResult.style.display = 'block'; // Show the stats result
+            });
+    
+            ipcRenderer.once('get-borrowed-stats-failed', (event, message) => {
+                statsResult.textContent = `Error: ${message}`;
+                statsResult.style.color = 'red';
+                statsResult.style.display = 'block'; // Show the error message
+            });
+    
+            viewStatsButton.textContent = 'Hide Stats'; // Update button text
+        } else {
+            statsResult.style.display = 'none'; // Hide the stats result
+            viewStatsButton.textContent = 'View Stats'; // Update button text
+        }
     });
-});
+
+}); // Closing brace for DOMContentLoaded event listener
 
 function validateDates(borrowedDate, returnDate) {
     const borrow = new Date(borrowedDate);
@@ -284,3 +306,22 @@ function sendActiveBooksEmail() {
 
     ipcRenderer.send('send-active-books-email', activeBooks);
 }
+const { ipcRenderer } = require('electron');
+
+// Notify the user when an update is available
+ipcRenderer.on('update-available', () => {
+    alert('A new update is available. It is being downloaded.');
+});
+
+// Notify the user when the update is downloaded
+ipcRenderer.on('update-downloaded', () => {
+    const restart = confirm('Update downloaded. Do you want to restart the app to apply the update?');
+    if (restart) {
+        ipcRenderer.send('restart-app');
+    }
+});
+
+// Notify the user if there is an error during the update process
+ipcRenderer.on('update-error', (event, errorMessage) => {
+    alert(`Error during update: ${errorMessage}`);
+});

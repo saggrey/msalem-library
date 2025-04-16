@@ -294,7 +294,7 @@ table tr:hover {
     display: flex; /* Use Flexbox to align items horizontally */
     justify-content: space-between; /* Add space between the sections */
     align-items: center; /* Align items vertically on the same line */
-    gap: 20px; /* Add space between the sections */
+    gap: 50px; /* Add space between the sections */
     margin-top: 20px;
 }
 
@@ -326,6 +326,6 @@ div#notifications-and-stats #send-email-button {
     transition: background 0.3s ease;
 }
 
-#send-email-button:hover {
+div#notifications-and-stats #send-email-button:hover {
     background-color: green;
 }
