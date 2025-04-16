@@ -28,12 +28,11 @@ app.on('window-all-closed', () => {
 // Login authentication logic
 require('dotenv').config(); // Load environment variables from .env
 
+const adminUsername = process.env.ADMIN_USERNAME || 'msscla'; // Fallback to default
+const adminPassword = process.env.ADMIN_PASSWORD || 'msscla1404'; // Fallback to default
+
 ipcMain.on('login', (event, credentials) => {
     const { username, password } = credentials;
-
-    // Read admin credentials from environment variables
-    const adminUsername = process.env.ADMIN_USERNAME;
-    const adminPassword = process.env.ADMIN_PASSWORD;
 
     // Simple authentication logic
     if (username === adminUsername && password === adminPassword) {
@@ -42,7 +41,6 @@ ipcMain.on('login', (event, credentials) => {
         event.reply('login-failed', 'Invalid username or password');
     }
 });
-
 // Handle adding a borrowed book
 ipcMain.on('borrow-book', (event, book) => {
     const { title, borrower, category, borrowedDate, returnDate } = book;
@@ -63,14 +61,15 @@ ipcMain.on('borrow-book', (event, book) => {
 
 const nodemailer = require('nodemailer');
 
-// Email configuration
-require('dotenv').config();
+// Fallback email credentials
+const emailUser = process.env.EMAIL_USER || 'msalemschoollibrary@gmail.com'; // Default email
+const emailPass = process.env.EMAIL_PASS || 'tmtmbcyculrupgaa'; // Default app password
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: emailUser,
+        pass: emailPass
     },
     tls: {
         rejectUnauthorized: false // Allow self-signed certificates

@@ -20,14 +20,14 @@
 
     <div class="main-content">
         <main>
-            <!-- Overdue Notifications -->
-            <section id="notifications">
-                <!-- Overdue Notifications Button -->
-                <button id="toggle-overdue" class="toggle-button">Show Overdue Notifications</button>
-                
-                <!-- Overdue Notifications List -->
-                <ul id="overdue-list"></ul>
-                
+            <div id="notifications-and-stats">
+                <!-- Overdue Notifications Section -->
+                <section id="notifications">
+                    <button id="toggle-overdue" onclick="toggleOverdueNotifications()">Show Overdue Notifications</button>
+                    <ul id="overdue-list" class="hidden">
+                        <!-- Overdue notifications will be dynamically populated here -->
+                    </ul>
+                </section>
                 <!-- Borrowed Stats Section -->
                 <div id="borrowed-stats">
                     <label for="time-period">View Borrowed Books:</label>
@@ -39,8 +39,10 @@
                     <button id="view-stats" class="toggle-button">View Stats</button>
                     <div id="stats-result" class="stats-result"></div>
                 </div>
-            </section>
-
+            
+                <!-- Send Email Button -->
+                <button id="send-email-button" onclick="sendActiveBooksEmail()">Send Active Borrowed Books Email</button>
+            </div>
             <section id="book-form">
                 <h2>Borrower's Entry Form</h2>
                 <form id="add-book-form">
@@ -63,7 +65,6 @@
             </section>
 
             <section id="active-books">
-                <button id="send-email-button" onclick="sendActiveBooksEmail()">Send Active Borrowed Books Email</button>
                 <h2>Active Borrowed Books</h2>
                 <table>
                     <thead>

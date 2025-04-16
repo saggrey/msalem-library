@@ -200,17 +200,33 @@ select:focus {
 
 /* Toggle Button Styling */
 .toggle-button {
-    background-color: rgb(128, 0, 38);
-    color: white;
+    background-color: green;
+    color: yellow; /* Change the text color to yellow */
     border: none;
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
 }
+/* Styling for the Show Overdue Notifications button */
+#toggle-overdue {
+    background-color:rgb(128, 0, 38);; /* Set the background color to red */
+    color: white; /* Set the text color to white */
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
+#toggle-overdue:hover {
+    background-color: darkred; /* Darker red on hover */
+    color: white; /* Change text color to yellow on hover */
+}
 .toggle-button:hover {
     background-color: darkgreen;
+    color: yellow; /* Keep the text red on hover */
 }
 
 /* Table Styling */
@@ -262,7 +278,7 @@ table tr:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 #active-books h2,
@@ -273,7 +289,33 @@ table tr:hover {
     align-self: center;
 }
 
-#send-email-button {
+/* Parent container for notifications, stats, and email button */
+#notifications-and-stats {
+    display: flex; /* Use Flexbox to align items horizontally */
+    justify-content: space-between; /* Add space between the sections */
+    align-items: center; /* Align items vertically on the same line */
+    gap: 20px; /* Add space between the sections */
+    margin-top: 20px;
+}
+
+/* Notifications Section Styling */
+#notifications {
+    flex: 0 0 auto; /* Prevent the notifications section from stretching */
+    display: flex;
+    align-items: center; /* Align content vertically */
+}
+
+/* Borrowed Stats Section Styling */
+#borrowed-stats {
+    flex: 1; /* Allow the stats section to take up remaining space */
+    display: flex;
+    align-items: center; /* Align content vertically */
+    gap: 10px;
+}
+
+/* Send Email Button Styling */
+div#notifications-and-stats #send-email-button {
+    flex: 0 0 auto; /* Prevent the button from stretching */
     background-color: rgb(128, 0, 38);
     color: white;
     border: none;
@@ -281,10 +323,9 @@ table tr:hover {
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    margin-bottom: 20px;
     transition: background 0.3s ease;
 }
 
 #send-email-button:hover {
-    background-color: darkgreen;
+    background-color: green;
 }
