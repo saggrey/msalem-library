@@ -259,3 +259,28 @@ function rotateQuotes() {
 
 // Set an interval to rotate quotes every 5 seconds (5000ms)
 setInterval(rotateQuotes, 5000);
+
+function sendActiveBooksEmail() {
+    // Show a confirmation popup
+    const confirmation = confirm("Are you sure you want to send the Active Borrowed Books email?");
+    if (!confirmation) {
+        alert("Email sending canceled.");
+        return;
+    }
+
+    const activeBooks = []; // Collect active borrowed books from the DOM
+
+    const rows = document.querySelectorAll('#active-books-list tr');
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        activeBooks.push({
+            title: cells[0].textContent,
+            borrower: cells[1].textContent,
+            category: cells[2].textContent,
+            borrowed_date: cells[3].textContent,
+            return_date: cells[4].textContent
+        });
+    });
+
+    ipcRenderer.send('send-active-books-email', activeBooks);
+}

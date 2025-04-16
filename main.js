@@ -26,11 +26,17 @@ app.on('window-all-closed', () => {
 });
 
 // Login authentication logic
+require('dotenv').config(); // Load environment variables from .env
+
 ipcMain.on('login', (event, credentials) => {
     const { username, password } = credentials;
 
+    // Read admin credentials from environment variables
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+
     // Simple authentication logic
-    if (username === 'msscla' && password === 'msscla1404') {
+    if (username === adminUsername && password === adminPassword) {
         mainWindow.loadFile(path.join(__dirname, 'index.html')); // Load the main page
     } else {
         event.reply('login-failed', 'Invalid username or password');
@@ -53,6 +59,68 @@ ipcMain.on('borrow-book', (event, book) => {
             }
         }
     );
+});
+
+const nodemailer = require('nodemailer');
+
+// Email configuration
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false // Allow self-signed certificates
+    }
+});
+
+// Function to send email
+ipcMain.on('send-active-books-email', (event, activeBooks) => {
+    const emailBody = `
+        <h2>Active Borrowed Books</h2>
+        <table border="1" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Borrower</th>
+                    <th>Category</th>
+                    <th>Borrowed Date</th>
+                    <th>Return Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${activeBooks.map(book => `
+                    <tr>
+                        <td>${book.title}</td>
+                        <td>${book.borrower}</td>
+                        <td>${book.category}</td>
+                        <td>${book.borrowed_date}</td>
+                        <td>${book.return_date}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+
+    const mailOptions = {
+        from: 'msalemschoollibrary@gmail.com', // Replace with your email
+        to: 'saggrey96@gmail.com', // Replace with the recipient's email
+        subject: 'Active Borrowed Books',
+        html: emailBody
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error('Error sending email:', err.message);
+            event.reply('send-email-failed', 'Failed to send email.');
+        } else {
+            console.log('Email sent:', info.response);
+            event.reply('send-email-success', 'Email sent successfully.');
+        }
+    });
 });
 
 ipcMain.on('get-borrowed-books', (event) => {
