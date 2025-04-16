@@ -46,6 +46,13 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
-    }
+    },
+ "publish": [
+        {
+            "provider": "github",
+            "owner": "saggrey",
+            "repo": "msalem-library"
+        }
+    ]
   }
 }
